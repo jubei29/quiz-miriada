@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-	<meta charset="UTF-8">
-	<title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-</head>
-<body>
-	<h1><%= title %>: el juego de las preguntas</h1>
-	<form action="/quizes/answer">
+
+	<form method="get" action="/quizes/answer">
 		<legend>Pregunta: <%= pregunta %></legend>
-		<label for="question">
+		<label for="question">Respuesta:
 			<input id="question" name="respuesta" type="text" placeholder="Responda aquí" />
 			<input type="submit" value="Enviar" />
 		</label>
 	</form>
-	<a href="/">Inténtelo otra vez</a>
-</body>
-</html>
