@@ -52,3 +52,7 @@ footer {
 nav span:first-child {
 	margin 	: 0 10px 0 0;
 }
+
+footer a {
+	display : block;
+}
