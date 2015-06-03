@@ -18,6 +18,31 @@ legend {
 	font-size 	: 1.1em;
 }
 
+ul.listado-fotos {
+	margin-top 		: 1em;
+	margin-bottom 	: 1em;
+	list-style-type : none;
+	display 		: flex;
+	flex-direction 	: row;
+	justify-content : center;
+}
+
+.listado-fotos li {
+	margin : .5em;
+}
+
+.listado-fotos figure {
+	border 		: 1px Solid #ccc;
+	padding 	: 3px;
+	margin-top 	: .5em;
+	box-shadow 	: 0 2px 4px rgba(0, 0, 0, .7);
+}
+
+.listado-fotos figcaption {
+	font-size 	: 11px;
+	font-family : Arial, sans-serif;
+}
+
 #page-wrap {
 	margin 	: 2% auto;
 	color 	: white;
