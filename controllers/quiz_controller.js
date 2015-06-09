@@ -23,11 +23,39 @@ exports.load = function(req, res, next, quizId) {
 
 // GET /quizes
 exports.index = function(req, res) {
-	models.Quiz.findAll().then(function (quizes) {
-		res.render('quizes/index', {
-			registros : quizes
+	if (req.query.search) {
+
+		var txtbusqueda = req.query.search.match(/[^\s]+/g);
+		q_like = '%' + txtbusqueda.join('%') + '%';
+		txtbusqueda = txtbusqueda.join(', ');
+
+		models.Quiz.findAll({
+			where : {
+				pregunta : {
+					$like : q_like
+				}
+			},
+			order : 'pregunta COLLATE NOCASE ASC'
+		}).then(function (quizes) {
+
+			var sinresultados = 'No se obtuvieron resultados';
+
+			if (quizes.length > 0) {
+				sinresultados = '';
+			}
+			res.render('quizes/indexfiltered', {
+				registros     : quizes,
+				txtbusqueda   : txtbusqueda,
+				sinresultados : sinresultados
+			});
 		});
-	});
+	} else {
+		models.Quiz.findAll().then(function (quizes) {
+			res.render('quizes/index', {
+				registros : quizes
+			});
+		});
+	}
 }
 
 // GET /quizes/question

@@ -17,3 +17,7 @@ footer,
 input {
 	font-size : large;
 }
+
+#buscador label .label {
+	display : none;
+}
