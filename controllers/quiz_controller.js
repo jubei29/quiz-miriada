@@ -23,11 +23,39 @@ exports.load = function(req, res, next, quizId) {
 
 // GET /quizes
 exports.index = function(req, res) {
-	models.Quiz.findAll().then(function (quizes) {
-		res.render('quizes/index', {
-			registros : quizes
+	if (req.query.search) {
+
+		var txtbusqueda = req.query.search.match(/[^\s]+/g);
+
+		// Para que SQLite no haga la comparación del 'sort' en modo binario
+		var collate = process.env.DATABASE_URL.indexOf('sqlite') != -1 ? ' COLLATE NOCASE ' : ' ';
+
+		q_like = '%' + txtbusqueda.join('%') + '%';
+		txtbusqueda = txtbusqueda.join(', ');
+
+		models.Quiz.findAll({
+			where : ["lower(pregunta) like ?", q_like.toLowerCase()],
+			order : 'pregunta' + collate + 'ASC'
+		}).then(function (quizes) {
+
+			var sinresultados = 'No se obtuvieron resultados';
+
+			if (quizes.length > 0) {
+				sinresultados = '';
+			}
+			res.render('quizes/indexfiltered', {
+				registros     : quizes,
+				txtbusqueda   : txtbusqueda,
+				sinresultados : sinresultados
+			});
 		});
-	});
+	} else {
+		models.Quiz.findAll().then(function (quizes) {
+			res.render('quizes/index', {
+				registros : quizes
+			});
+		});
+	}
 }
 
 // GET /quizes/question

@@ -81,3 +81,24 @@ nav span:first-child {
 footer a {
 	display : block;
 }
+
+#buscador fieldset {
+	border 	: none;
+	margin 	: .25em 0 1em 0;
+}
+
+#buscador label {
+	float : right;
+}
+
+#buscador input {
+	padding : 0.5em;
+}
+
+ul.preguntas {
+	list-style-type : none;
+}
+
+ul.preguntas li {
+	line-height : 1.5;
+}
