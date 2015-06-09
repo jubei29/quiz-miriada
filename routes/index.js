@@ -7,6 +7,10 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Quiz' });
 });
 
+/* Captura el parámetro ':quizId', si existe  y ejecuta
+   el middelware 'load' que controla los posibles errores */
+router.param('quizId', quiz_controller.load);
+
 /* GET página de preguntas */
 router.get('/quizes', quiz_controller.index);
 router.get('/quizes/:quizId(\\d+)', quiz_controller.show);
