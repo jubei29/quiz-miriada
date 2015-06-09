@@ -1,0 +1,6 @@
+
+	<ul>
+<% for (var i = 0; i < registros.length; i++) { %>
+		<li><a href="<%= 'quizes/' + registros[i].id; %>"><%= registros[i].pregunta %></a></li>
+<% } %>
+	</ul>

@@ -1,26 +1,39 @@
 var models = require('../models/models');
 
 // GET /quizes/question
-exports.question = function(req, res) {
-	models.Quiz.findAll().then(function (quizes) {
-		res.render('quizes/question', {
-			title    : 'Quiz',
-			pregunta : quizes[0].pregunta
+exports.show = function(req, res) {
+	models.Quiz.findById(req.params.quizId).then(function (quiz) {
+		res.render('quizes/show', {
+			title : 'Quiz',
+			quiz  : quiz
 		});
 	});
 }
 
 // GET /quizes/answer
 exports.answer = function(req, res) {
-	var resultado = 'Incorrecto';
-
-	models.Quiz.findAll().then(function (quizes) {
-		if (quizes[0].respuesta.toLowerCase() === req.query.respuesta.toLowerCase()) {
-			resultado = 'Correcto';
+	models.Quiz.findById(req.params.quizId).then(function (quiz) {
+		if (quiz.respuesta.toLowerCase() === req.query.respuesta.toLowerCase()) {
+			acierto = true;
+			res.render('quizes/answerok', {
+				title     : 'Quiz',
+				quiz      : quiz,
+			});
+		} else {
+			res.render('quizes/answerfail', {
+				title     : 'Quiz',
+				quiz      : quiz,
+				respuesta : req.query.respuesta
+			});
 		}
-		res.render('quizes/answer', {
-			title     : 'Quiz',
-			resultado : resultado
+	});
+}
+
+// GET /quizes
+exports.index = function(req, res) {
+	models.Quiz.findAll().then(function (quizes) {
+		res.render('quizes/index', {
+			registros : quizes
 		});
 	});
 }
