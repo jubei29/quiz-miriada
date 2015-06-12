@@ -10,7 +10,7 @@ body {
 nav {
 	float 	: left;
 	width 	: 15%;
-	height 	: 200px;
+	height 	: 400px;
 }
 
 nav span,
@@ -21,7 +21,7 @@ nav span:first-child {
 section {
 	float 	: right;
 	width 	: 80%;
-	height 	: 200px;
+	height 	: 400px;
 }
 
 footer {

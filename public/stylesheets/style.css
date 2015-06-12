@@ -104,3 +104,8 @@ ul.preguntas {
 ul.preguntas li {
 	line-height : 1.5;
 }
+
+#errorsmsg ul {
+	list-style-type : none;
+	color         	: red;
+}
