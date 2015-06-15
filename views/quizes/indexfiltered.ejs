@@ -1,13 +1,14 @@
 
 			<form action="/quizes" method="GET" id="buscador">
 				<fieldset>
-					<label for="idbuscador"><span class="label">Buscar una pregunta: </span><input type="text" name="search" placeholder="texto de la pregunta" id="idbuscador"><input type="submit" value="Buscar"></label>
+					<label for="idbuscador">
+						<span class="nophone">Buscar una pregunta: </span>
+						<input type="text" name="search" placeholder="texto de la pregunta" id="idbuscador" />
+						<input type="submit" value="Buscar" />
+					</label>
 				</fieldset>
 			</form>
 			<p>Mostrando todas las preguntas con el texto <strong>"<%= txtbusqueda %>"</strong>, ordenadas alfabéticamente:</p>
 			<% if (sinresultados !== '') { %><p><strong><%= sinresultados %></strong><p><% } %>
-			<ul class="preguntas">
-<% for (var i = 0; i < registros.length; i++) { %>
-				<li><a href="<%= 'quizes/' + registros[i].id; %>"><%= registros[i].pregunta %></a></li>
-<% } %>
-			</ul>
+<% include _indexlist.ejs %>
+			<a href="quizes/new"><button type="button">Crear pregunta</button></a>

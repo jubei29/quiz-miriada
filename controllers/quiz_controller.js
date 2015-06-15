@@ -34,10 +34,10 @@ exports.index = function(req, res) {
 		txtbusqueda = txtbusqueda.join(', ');
 
 		models.Quiz.findAll({
-			where : ["lower(pregunta) like ?", q_like.toLowerCase()],
-			order : 'pregunta' + collate + 'ASC'
+			include : [ models.Categories ],
+			where   : ["lower(pregunta) like ?", q_like.toLowerCase()],
+			order   : 'pregunta' + collate + 'ASC'
 		}).then(function (quizes) {
-
 			var sinresultados = 'No se obtuvieron resultados';
 
 			if (quizes.length > 0) {
@@ -50,7 +50,9 @@ exports.index = function(req, res) {
 			});
 		});
 	} else {
-		models.Quiz.findAll().then(function (quizes) {
+		models.Quiz.findAll({
+			include : [ models.Categories ]
+		}).then(function (quizes) {
 			res.render('quizes/index', {
 				registros : quizes
 			});
@@ -89,9 +91,13 @@ exports.new = function(req, res) {
 		pregunta  : '',
 		respuesta : ''
 	}
-	res.render('quizes/new', {
-		title : 'Quiz',
-		quiz  : quiz
+	models.Categories.findAll().then(function (categories) {
+		res.render('quizes/new', {
+			title      : 'Quiz',
+			action     : 'Añadir',
+			quiz       : quiz,
+			categories : categories
+		})
 	})
 }
 
@@ -103,13 +109,17 @@ exports.create = function(req, res) {
 	.validate()
 	.then(function (err) {
 		if (err) {
-			res.render('quizes/new', {
-				quiz   : quiz,
-				errors : err.errors
-			})
+			models.Categories.findAll().then(function (categories) {
+				res.render('quizes/new', {
+					action     : 'Añadir',
+					quiz       : quiz,
+					categories : categories,
+					errors     : err.errors
+				})
+			});
 		} else {
 			quiz.save({
-				fields : ['pregunta', 'respuesta']
+				fields : ['pregunta', 'respuesta', 'cat_id']
 			}).then(function () {
 				res.redirect('/quizes');
 			});
@@ -119,8 +129,12 @@ exports.create = function(req, res) {
 
 // GET /quizes/edit
 exports.edit = function(req, res) {
-	res.render('quizes/edit', {
-		quiz: req.quiz
+	models.Categories.findAll().then(function (categories) {
+		res.render('quizes/edit', {
+			action     : 'Editar',
+			quiz       : req.quiz,
+			categories : categories
+		});
 	});
 }
 
@@ -128,18 +142,23 @@ exports.edit = function(req, res) {
 exports.update = function(req, res) {
 	req.quiz.pregunta = req.body.quiz.pregunta;
 	req.quiz.respuesta = req.body.quiz.respuesta;
+	req.quiz.cat_id = req.body.quiz.cat_id;
 
 	req.quiz
 	.validate()
 	.then(function (err) {
 		if (err) {
-			res.render('quizes/edit', {
-				quiz   : req.quiz,
-				errors : err.errors
+			models.Categories.findAll().then(function (categories) {
+				res.render('quizes/edit', {
+					action     : 'Editar',
+					quiz       : req.quiz,
+					categories : categories,
+					errors     : err.errors
+				});
 			});
 		} else {
 			req.quiz.save({
-				fields : ['pregunta', 'respuesta']
+				fields : ['pregunta', 'respuesta', 'cat_id']
 			}).then(function () {
 				res.redirect('/quizes');
 			});

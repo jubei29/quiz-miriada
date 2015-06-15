@@ -1,9 +1,9 @@
 // Definimos la estructura del objeto que hace de interface con la tabla
-// de la BBDD. Tiene relación uno a uno con dicha tabla.
+// Quiz de la BBDD. Tiene relación uno a uno con dicha tabla.
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('Quiz', {
 		pregunta  : {
-			type : DataTypes.STRING,
+			type  : DataTypes.STRING,
 			validate : {
 				notEmpty : {
 					msg : "-> Falta pregunta"
@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
 			}
 		},
 		respuesta : {
-			type : DataTypes.STRING,
+			type  : DataTypes.STRING,
 			validate : {
 				notEmpty : {
 					msg : "-> Falta respuesta"

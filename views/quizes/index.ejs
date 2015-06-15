@@ -1,18 +1,12 @@
 
 			<form action="/quizes" method="GET" id="buscador">
 				<fieldset>
-					<label for="idbuscador"><span class="nophone">Buscar una pregunta: </span><input type="text" name="search" placeholder="texto de la pregunta" id="idbuscador"><input type="submit" value="Buscar"></label>
+					<label for="idbuscador">
+						<span class="nophone">Buscar una pregunta: </span>
+						<input type="text" name="search" placeholder="texto de la pregunta" id="idbuscador" />
+						<input type="submit" value="Buscar" />
+					</label>
 				</fieldset>
 			</form>
-			<ul class="preguntas">
-<% for (var i = 0; i < registros.length; i++) { %>
-				<li>
-					<a href="<%= 'quizes/' + registros[i].id; %>"><%= registros[i].pregunta %></a>
-					<a href="<%= 'quizes/' + registros[i].id + '/edit'; %>"><button type="button">Editar</button></a>
-					<form action="<%= 'quizes/' + registros[i].id + '?_method=delete'; %>" method="post" class="enlinea">
-						<button type="submit" onClick="return confirm('¿Borrar: <%= registros[i].pregunta %>?');">Borrar</button></a>
-					</form>
-				</li>
-<% } %>
-			</ul>
+<% include _indexlist.ejs %>
 			<a href="quizes/new"><button type="button">Crear pregunta</button></a>

@@ -1,6 +1,33 @@
 	<fieldset>
-		<legend>Añadir pregunta:</legend>
-		<div><label for="newpreg"><span class="nophone">Pregunta: </span><input id="newpreg" name="quiz[pregunta]" type="text" placeholder="pregunta" value="<%= quiz.pregunta %>" /></label></div>
-		<div><label for="newresp"><span class="nophone">Respuesta: </span><input id="newresp" name="quiz[respuesta]" type="text" placeholder="respuesta" value="<%= quiz.respuesta %>" /></label></div>
+		<legend><%= action %> pregunta:</legend>
+		<div>
+			<label for="newpreg">
+				<span class="nophone">Pregunta: </span>
+				<input id="newpreg" name="quiz[pregunta]" type="text" placeholder="pregunta" value="<%= quiz.pregunta %>" />
+			</label>
+		</div>
+		<div>
+			<label for="newresp">
+				<span class="nophone">Respuesta: </span>
+				<input id="newresp" name="quiz[respuesta]" type="text" placeholder="respuesta" value="<%= quiz.respuesta %>" />
+			</label>
+		</div>
+		<div>
+			<label for="newcat">
+				<span class="nophone">Categoría: </span>
+				<select name="quiz[cat_id]" id="newcat">
+
+				<%
+					var checked = '';
+					for (var i = 0; i < categories.length; i++) {
+						checked = categories[i].id === quiz.cat_id ? ' selected=selected' : '';
+						console.log("Categoria: " + categories[i].id + ", " + quiz.cat_id);
+				%>
+					<option value="<%= categories[i].id %>" <%= checked %>><%= categories[i].categoria %></option>
+				<% } %>
+
+				</select>
+			</label>
+		</div>
 	</fieldset>
 	<a href="/quizes"><button type="button">Cancelar</button></a><input type="submit" value="Salvar" />
