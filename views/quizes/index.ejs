@@ -9,6 +9,9 @@
 				<li>
 					<a href="<%= 'quizes/' + registros[i].id; %>"><%= registros[i].pregunta %></a>
 					<a href="<%= 'quizes/' + registros[i].id + '/edit'; %>"><button type="button">Editar</button></a>
+					<form action="<%= 'quizes/' + registros[i].id + '?_method=delete'; %>" method="post" class="enlinea">
+						<button type="submit" onClick="return confirm('¿Borrar: <%= registros[i].pregunta %>?');">Borrar</button></a>
+					</form>
 				</li>
 <% } %>
 			</ul>

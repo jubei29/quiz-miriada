@@ -109,3 +109,7 @@ ul.preguntas li {
 	list-style-type : none;
 	color         	: red;
 }
+
+.enlinea {
+	display : inline;
+}
