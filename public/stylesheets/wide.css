@@ -24,6 +24,12 @@ section {
 	height 	: 400px;
 }
 
+section section {
+	float   : none;
+	width   : auto;
+	height  : auto;
+}
+
 footer {
 	clear 	: both;
 	display : block;

@@ -38,8 +38,23 @@ exports.Categories = Categories;
 // Importamos la definíción de la tabla desde 'quiz.js'
 // y la exportamos en la propiedad Quiz de 'models.js'
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
-Quiz.belongsTo(Categories, { foreignKey : 'cat_id' });
 exports.Quiz = Quiz;
+
+// Importamos la definición de la tabla Comments desde
+// 'comments.js' en la propiedad Comments del modelo
+var Comments = sequelize.import(path.join(__dirname, 'comments'));
+exports.Comments = Comments;
+
+// Establecemos las relaciones entre las tablas
+
+// La tabla 'Quiz' estará relacionada con 'Categories' mediante
+// el campo explícito 'cat_id'
+Quiz.belongsTo(Categories, { foreignKey : 'cat_id' });
+// La tabla 'Comments' estará relacionada con la tabla 'Quiz'
+// mediante un campo creado automáticamente por 'sequelize'
+// que debería ser 'quizID'
+Comments.belongsTo(Quiz);
+Quiz.hasMany(Comments);
 
 // Sincronizamos todos los modelos con las
 // tablas de las BBDD 'físicas'. Si no existe 'físicamente' se
@@ -77,3 +92,4 @@ Categories.sync().then(function () {
 	});
 });
 
+Comments.sync();

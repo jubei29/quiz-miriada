@@ -1,0 +1,13 @@
+<form method="post" action="/quizes/<%= quiz.id %>/comments/create">
+	<fieldset>
+		<legend>Añadir comentario para la pregunta '<%= quiz.pregunta %>':</legend>
+		<div>
+			<label for="newcomm">
+				<span class="nophone">Comentario: </span>
+				<input id="newcomm" name="comment[texto]" type="text" placeholder="comentario" />
+			</label>
+		</div>
+	</fieldset>
+	<a href="/quizes/<%= quiz.id %>"><button type="button">Cancelar</button></a>
+	<input type="submit" value="Salvar" />
+</form>

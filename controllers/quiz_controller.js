@@ -9,7 +9,9 @@ var models = require('../models/models');
 // También lanza un error en caso de que ocurriera cualquier
 // contratiempo en la búsqueda de 'quizId' en la BBDD
 exports.load = function(req, res, next, quizId) {
-	models.Quiz.findById(quizId).then(function(quiz) {
+	models.Quiz.findById(quizId, {
+		include : [{ model :models.Comments }]
+	}).then(function(quiz) {
 		if (quiz) {
 			req.quiz = quiz;
 			next();
