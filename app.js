@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
 var methodOverride = require('method-override');
+var session = require('express-session');
 
 var routes = require('./routes/index');
 // var users = require('./routes/users');
@@ -23,9 +24,26 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-app.use(cookieParser());
+app.use(cookieParser('quiz-215-jubei29-miriadax'));
+app.use(session());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Helpers dinámicos
+app.use(function (req, res, next) {
+  // Mientras no se dirija a la pantalla de 'login' o
+  // haya pulsado en 'logout' guardamos la ruta a la que
+  // se dirija al usuario para volver a ella en alguno de
+  // los casos anteriores
+  if (!req.path.match(/\/login|\/logout/)) {
+    req.session.redir = req.path;
+  }
+
+  // Hacemos visibles los datos de la sesión para todas las vistas
+  res.locals.session = req.session;
+
+  next();
+});
 
 app.use('/', routes);
 // app.use('/users', users);

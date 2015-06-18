@@ -10,6 +10,14 @@
 <body>
 	<div id="page-wrap">
 		<header id="h1" class="main">
+			<div class="loginsect">
+			<% if (session.user !== undefined) { %>
+				<span>Hola, <%= session.user.name %></span>
+				<form action="/logout?_method=delete" method="post"><input type="submit" value="Logout" /></form>
+			<% } else { %>
+				<a href="/login"><button type="button">Login</button></a>
+			<% } %>
+			</div>
 			<h2>Quiz<span>: El juego de las preguntas</span></h2>
 		</header>
 
