@@ -11,4 +11,6 @@
 			<p>Mostrando todas las preguntas con el texto <strong>"<%= txtbusqueda %>"</strong>, ordenadas alfabéticamente:</p>
 			<% if (sinresultados !== '') { %><p><strong><%= sinresultados %></strong><p><% } %>
 <% include _indexlist.ejs %>
+			<% if (session.user !== undefined) { %>
 			<a href="quizes/new"><button type="button">Crear pregunta</button></a>
+			<% } %>
