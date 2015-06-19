@@ -8,13 +8,18 @@
 	</form>
 	<section id="lista-comentarios">
 		<h3>Comentarios</h3>
+		<% for (var comment in quiz.Comments) { %>
+			<% if (quiz.Comments[comment].publicado === true || session.user !== undefined) { %>
 		<article class="comentario">
-			<% for (var comment in quiz.Comments) { %>
 			<div>
 				<%= quiz.Comments[comment].texto %>
+				<% if (quiz.Comments[comment].publicado === false) { %>
+				<a href="/quizes/<%= quiz.id %>/comments/<%= quiz.Comments[comment].id %>/publish"><button type="button">Publicar</button></a>
+				<% } %>
 			</div>
-			<% } %>
 		</article>
+			<% } %>
+		<% } %>
 		<a href="/quizes/<%= quiz.id %>/comments/new">
 			<button type="text">Agregar comentario</button>
 		</a>

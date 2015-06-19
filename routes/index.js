@@ -11,7 +11,8 @@ router.get('/', function(req, res, next) {
 
 /* Captura el parámetro ':quizId', si existe  y ejecuta
    el middelware 'load' que controla los posibles errores */
-router.param('quizId', quiz_controller.load);
+router.param('quizId', 		quiz_controller.load);
+router.param('commentId', 	comments_controller.load);
 
 // Rutas para las sesiones
 router.get('/login',		session_controller.new);
@@ -29,8 +30,9 @@ router.put('/quizes/:quizId(\\d+)', 		session_controller.loginRequired, quiz_con
 router.delete('/quizes/:quizId(\\d+)', 		session_controller.loginRequired, quiz_controller.destroy);
 
 // Rutas para los comentarios
-router.get('/quizes/:quizId(\\d+)/comments/new', 		session_controller.loginRequired, comments_controller.new);
-router.post('/quizes/:quizId(\\d+)/comments/create', 	session_controller.loginRequired, comments_controller.create)
+router.get('/quizes/:quizId(\\d+)/comments/new', 						comments_controller.new);
+router.post('/quizes/:quizId(\\d+)/comments/create', 					comments_controller.create)
+router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',	session_controller.loginRequired, comments_controller.publish);
 
 /* GET créditos */
 router.get('/author', function(req, res) {

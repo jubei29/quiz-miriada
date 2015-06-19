@@ -1,4 +1,12 @@
 
+exports.loginRequired = function(req, res, next) {
+	if (req.session.user !== undefined) {
+		next();
+	} else {
+		res.redirect('/login');
+	}
+}
+
 exports.new = function(req, res) {
 	res.render('sessions/new.ejs', {
 		lastpage : req.session.redir
@@ -23,12 +31,4 @@ exports.create = function(req, res) {
 exports.destroy = function(req, res) {
 	delete req.session.user;
 	res.redirect(req.session.redir);
-}
-
-exports.loginRequired = function(req, res, next) {
-	if (req.session.user !== undefined) {
-		next();
-	} else {
-		res.redirect('/login');
-	}
 }
