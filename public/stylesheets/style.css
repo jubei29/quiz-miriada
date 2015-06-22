@@ -155,3 +155,13 @@ ul.preguntas li {
 	display: block;
 	margin: .5em;
 }
+
+dt {
+	color: #307075;
+}
+
+dt,
+dd {
+	font-weight: bold;
+	display: inline-block;
+}
