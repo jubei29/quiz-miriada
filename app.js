@@ -42,6 +42,15 @@ app.use(function (req, res, next) {
   // Hacemos visibles los datos de la sesión para todas las vistas
   res.locals.session = req.session;
 
+  // Si has pasado más de dos minutos desde la última interacción
+  // con la página, el sistema desconecta al usuario autoamáticamente
+  if (req.session.elapsed) {
+    if ((Date.now() - req.session.elapsed) > 120000 && req.session.user !== undefined) {
+      console.log("¡¡¡ DESCONECTANDO !!!");
+      delete req.session.user;
+    }
+  }
+  req.session.elapsed = Date.now();
   next();
 });
 
