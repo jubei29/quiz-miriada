@@ -54,7 +54,12 @@ Quiz.belongsTo(Categories, { foreignKey : 'cat_id' });
 // mediante un campo creado automáticamente por 'sequelize'
 // que debería ser 'quizID'
 Comments.belongsTo(Quiz);
-Quiz.hasMany(Comments);
+Quiz.hasMany(Comments, {
+	constraints : true,
+	onUpdate    : 'cascade',
+	onDelete    : 'cascade',
+	hooks       : true
+});
 
 // Sincronizamos todos los modelos con las
 // tablas de las BBDD 'físicas'. Si no existe 'físicamente' se
